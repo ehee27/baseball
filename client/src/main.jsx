@@ -12,7 +12,6 @@ import Home from './pages/Home.jsx'
 import TwoColumn from './pages/TwoColumn.jsx'
 import ThreeColumn from './pages/ThreeColumn.jsx'
 import SingleColumn from './pages/SingleColumn.jsx'
-import Mixed from './pages/Mixed.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,7 +20,6 @@ const router = createBrowserRouter(
       <Route path="/single-column" element={<SingleColumn />}></Route>
       <Route path="/two-column" element={<TwoColumn />}></Route>
       <Route path="/three-column" element={<ThreeColumn />}></Route>
-      <Route path="/mixed" element={<Mixed />}></Route>
     </Route>
   )
 )
