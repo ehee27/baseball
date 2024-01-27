@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 
 const links = [
   { name: 'Home', path: '/' },
-  { name: 'Single', path: '/single-column' },
-  { name: 'Two', path: '/two-column' },
-  { name: 'Three', path: '/three-column' },
-  { name: 'Mixed', path: '/mixed' },
+  // { name: 'Single', path: '/single-column' },
+  // { name: 'Two', path: '/two-column' },
+  // { name: 'Three', path: '/three-column' },
+  // { name: 'Mixed', path: '/mixed' },
 ]
 
 const Navbar = () => {
