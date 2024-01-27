@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import userRoutes from './routes/userRoutes.js'
+import messageRoutes from './routes/messageRoutes'
 import connectDB from './config/db.js'
 // import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
@@ -17,6 +18,7 @@ app.use(cookieParser())
 
 // use my routes
 app.use('/api/users', userRoutes)
+app.use('/api/messages', messageRoutes)
 
 app.get('/', (req, res) => {
   res.send('Server is HOT')
