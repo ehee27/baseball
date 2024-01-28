@@ -2,6 +2,7 @@ import Message from '../models/Message.js'
 import User from '../models/User.js'
 import asyncHandler from 'express-async-handler'
 
+// GET ALL MESSAGES -------------------------------------
 const getAllMessages = asyncHandler(async (req, res) => {
   // Get all messages from MongoDB
   const messages = await Message.find().lean()
@@ -20,9 +21,10 @@ const getAllMessages = asyncHandler(async (req, res) => {
   res.json(messagesWithUser)
 })
 
+//
+// CREATE NEW MESSAGE ---------------------------------
 const createNewMessage = asyncHandler(async (req, res) => {
   const { creator, user, title, content } = req.body
-  console.log('THis is content', content)
 
   // Confirm data
   if (!user || !title || !content) {
@@ -36,10 +38,10 @@ const createNewMessage = asyncHandler(async (req, res) => {
     return res.status(409).json({ message: 'Duplicate message title' })
   }
 
-  // Create and store the new user
+  // create the default thread array
   let newThread = []
-  console.log('This is newThread', newThread)
-
+  //
+  // ACTUALLY CREATE THE MESSAGE
   const message = await Message.create({
     creator,
     user,
@@ -71,6 +73,8 @@ const createNewMessage = asyncHandler(async (req, res) => {
   }
 })
 
+//
+// UPDATE MESSAGE ---------------------------------
 const updateMessage = asyncHandler(async (req, res) => {
   const { id, creator, user, title, content, read } = req.body
 
@@ -119,6 +123,8 @@ const updateMessage = asyncHandler(async (req, res) => {
   res.json(`'${updatedMessage.title}' updated`)
 })
 
+//
+// DELETE MESSAGE ---------------------------------
 const deleteMessage = asyncHandler(async (req, res) => {
   const { id } = req.body
 
