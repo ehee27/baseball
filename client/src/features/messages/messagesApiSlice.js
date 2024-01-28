@@ -1,6 +1,7 @@
 import { createSelector, createEntityAdapter } from '@reduxjs/toolkit'
 import { apiSlice } from '../../app/api/apiSlice'
 
+//-----------------------------------------------------
 const messagesAdapter = createEntityAdapter({
   sortComparer: (a, b) =>
     a.completed === b.completed ? 0 : a.completed ? 1 : -1,
@@ -10,6 +11,8 @@ const initialState = messagesAdapter.getInitialState()
 
 export const messagesApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
+    //
+    // GET ALL MESSAGES -----------------------
     getMessages: builder.query({
       query: () => '/api/messages',
       validateStatus: (response, result) => {
@@ -32,10 +35,53 @@ export const messagesApiSlice = apiSlice.injectEndpoints({
         } else return [{ type: 'Message', id: 'LIST' }]
       },
     }),
+
+    // ADD NEW MESSAGE -----------------------
+    addNewMessage: builder.mutation({
+      query: newMessageData => ({
+        url: '/api/messages',
+        method: 'POST',
+        body: {
+          ...newMessageData,
+        },
+      }),
+      invalidatesTags: [{ type: 'Message', id: 'LIST' }],
+    }),
+
+    // UPDATE MESSAGE -------------------------
+    updateMessage: builder.mutation({
+      query: dataToUpdate => ({
+        url: '/api/messages',
+        method: 'PATCH',
+        body: {
+          ...dataToUpdate,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Message', id: arg.id },
+      ],
+    }),
+
+    // DELETE MESSAGE --------------------------
+    deleteMessage: builder.mutation({
+      query: ({ id }) => ({
+        url: `/api/messages`,
+        method: 'DELETE',
+        body: { id },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Message', id: arg.id },
+      ],
+    }),
   }),
 })
 
-export const { useGetMessagesQuery } = messagesApiSlice
+export const {
+  useGetMessagesQuery,
+  useAddNewMessageMutation,
+  useUpdateMessageMutation,
+  useDeleteMessageMutation,
+} = messagesApiSlice
 
 // returns the query result object
 export const selectMessagesResult =

@@ -17,7 +17,9 @@ const MESSAGES_REGEX = /^\/dash\/messages(\/)?$/
 const USERS_REGEX = /^\/dash\/users(\/)?$/
 
 const DashHeader = () => {
-  const content = <div className="flex bg-zinc-700 p-1">Dash Header</div>
+  const content = (
+    <div className="flex bg-zinc-700 text-white p-3">Dash Header</div>
+  )
 
   return content
 }
