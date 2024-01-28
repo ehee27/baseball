@@ -14,7 +14,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 //
 // REGISTER NEW USER ---------------------------------
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, roles } = req.body
+  const { name, email, username, password, roles } = req.body
   //---------------
   const userExists = await User.findOne({ email })
   if (userExists) {
@@ -22,7 +22,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
   //
-  const user = await User.create({ name, email, password, roles })
+  const user = await User.create({ name, email, username, password, roles })
   if (user) {
     //
     // GENERATE TOKEN -------------------------

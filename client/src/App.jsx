@@ -6,6 +6,10 @@ import DashLayout from './components/dash/DashLayout'
 import Welcome from './features/auth/Welcome'
 import MessageList from './features/messages/MessageList'
 import UserList from './features/users/UserList'
+import NewUserForm from './features/users/NewUserForm'
+import EditUserForm from './features/users/EditUserForm'
+import NewMessageForm from './features/messages/NewMessageForm'
+import EditMessageForm from './features/messages/EditMessageForm'
 
 function App() {
   return (
@@ -19,10 +23,14 @@ function App() {
           {/* --------------- MESSAGES ----------------- */}
           <Route path="messages">
             <Route index element={<MessageList />} />
+            <Route path="new" element={<NewMessageForm />} />
+            <Route path=":id" element={<EditMessageForm />} />
           </Route>
           {/* --------------- USERS ----------------- */}
           <Route path="users">
             <Route index element={<UserList />} />
+            <Route path="new" element={<NewUserForm />} />
+            <Route path=":id" element={<EditUserForm />} />
           </Route>
         </Route>
       </Route>
