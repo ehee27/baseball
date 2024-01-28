@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom'
 
 const links = [
   { name: 'Home', path: '/' },
-  // { name: 'Single', path: '/single-column' },
-  // { name: 'Two', path: '/two-column' },
-  // { name: 'Three', path: '/three-column' },
+  { name: 'Dash', path: '/dash' },
   // { name: 'Mixed', path: '/mixed' },
 ]
 

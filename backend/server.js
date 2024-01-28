@@ -3,20 +3,23 @@ import dotenv from 'dotenv'
 dotenv.config()
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import userRoutes from './routes/userRoutes.js'
-import messageRoutes from './routes/messageRoutes'
+import messageRoutes from './routes/messageRoutes.js'
 import connectDB from './config/db.js'
-// import mongoose from 'mongoose'
+import cors from 'cors'
+import corsOptions from './config/corsOptions.js'
 import cookieParser from 'cookie-parser'
 
 connectDB()
-
 const port = process.env.PORT || 3500
 const app = express()
+
+// ALLOW APP TO USE
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-// use my routes
+// USE ROUTES
 app.use('/api/users', userRoutes)
 app.use('/api/messages', messageRoutes)
 
@@ -24,7 +27,7 @@ app.get('/', (req, res) => {
   res.send('Server is HOT')
 })
 
-// error handling from errorMiddleware
+// ERROR HANDLING
 app.use(notFound)
 app.use(errorHandler)
 

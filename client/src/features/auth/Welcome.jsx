@@ -26,7 +26,7 @@ const Welcome = () => {
             <Link className="text-xl text-gray-500" to="/dash/users">
               View Users
             </Link>
-            <Link className="text-xl text-gray-500" to="/dash/users">
+            <Link className="text-xl text-gray-500" to="/dash/messages">
               View Messages
             </Link>
           </div>

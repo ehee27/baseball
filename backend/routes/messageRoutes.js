@@ -5,7 +5,7 @@ import {
   updateMessage,
   deleteMessage,
 } from '../controllers/messageController.js'
-import verifyJWT from '../middleware/verifyJWT.js'
+// import verifyJWT from '../middleware/verifyJWT.js'
 
 const router = express.Router()
 
