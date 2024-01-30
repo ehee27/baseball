@@ -24,7 +24,8 @@ const getAllMessages = asyncHandler(async (req, res) => {
 //
 // CREATE NEW MESSAGE ---------------------------------
 const createNewMessage = asyncHandler(async (req, res) => {
-  const { creator, user, title, content } = req.body
+  // const { creator, user, title, content } = req.body
+  const { user, title, content } = req.body
 
   // Confirm data
   if (!user || !title || !content) {
@@ -43,7 +44,7 @@ const createNewMessage = asyncHandler(async (req, res) => {
   //
   // ACTUALLY CREATE THE MESSAGE
   const message = await Message.create({
-    creator,
+    // creator,
     user,
     title,
     thread: [

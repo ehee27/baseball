@@ -10,7 +10,8 @@ const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
 
 const NewUserForm = () => {
   const navigate = useNavigate()
-  //
+
+  // ADD USER MUTATION
   const [addNewUser, { isLoading, isSuccess, isError, error }] =
     useAddNewUserMutation()
   // ---------------------------------------------------
@@ -21,7 +22,7 @@ const NewUserForm = () => {
   const [validUsername, setValidUsername] = useState(false)
   const [password, setPassword] = useState('')
   const [validPassword, setValidPassword] = useState(false)
-  const [roles, setRoles] = useState(['Employee'])
+  const [roles, setRoles] = useState(['User'])
   // STATE HANDLERS
   const onNameChanged = e => setName(e.target.value)
   const onEmailChanged = e => setEmail(e.target.value)
@@ -29,11 +30,19 @@ const NewUserForm = () => {
   const onPasswordChanged = e => setPassword(e.target.value)
   // ------------------------------------------------------
 
+  // HANDLE ROLES ARRAY BASED ON TARGET SELECTED -----------
+  const onRolesChanged = e => {
+    const values = Array.from(
+      e.target.selectedOptions, //HTMLCollection
+      option => option.value
+    )
+    setRoles(values)
+  }
   // CREATE USER HANDLER
   const onCreateUserClicked = async e => {
     e.preventDefault()
     if (canSave) {
-      await addNewUser({ name, email, username, password, roles })
+      await addNewUser({ name, email, username, password, active: true, roles })
     }
   }
 
@@ -56,15 +65,7 @@ const NewUserForm = () => {
     }
   }, [isSuccess, navigate])
 
-  // HANDLE ROLES ARRAY BASED ON TARGET SELECTED -----------
-  const onRolesChanged = e => {
-    const values = Array.from(
-      e.target.selectedOptions, //HTMLCollection
-      option => option.value
-    )
-    setRoles(values)
-  }
-
+  // CAN SAVE
   const canSave =
     [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
 
@@ -88,7 +89,7 @@ const NewUserForm = () => {
         <h2>New User</h2>
 
         {/* // NAME --------------------------------- */}
-        <label className="form__label" htmlFor="name">
+        <label htmlFor="name">
           Name: <span className="nowrap">[3-20 letters]</span>
         </label>
         <input
@@ -102,7 +103,7 @@ const NewUserForm = () => {
         />
 
         {/* // EMAIL --------------------------------- */}
-        <label className="form__label" htmlFor="email">
+        <label htmlFor="email">
           Email: <span className="nowrap">[3-20 letters]</span>
         </label>
         <input
@@ -116,7 +117,7 @@ const NewUserForm = () => {
         />
 
         {/* // USERNAME --------------------------------- */}
-        <label className="form__label" htmlFor="username">
+        <label htmlFor="username">
           Username: <span className="nowrap">[3-20 letters]</span>
         </label>
         <input
@@ -130,7 +131,7 @@ const NewUserForm = () => {
         />
 
         {/* // PASSWORD --------------------------------- */}
-        <label className="form__label" htmlFor="password">
+        <label htmlFor="password">
           Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span>
         </label>
         <input
@@ -143,9 +144,7 @@ const NewUserForm = () => {
         />
 
         {/* // ROLES --------------------------------- */}
-        <label className="form__label" htmlFor="roles">
-          ASSIGNED ROLES:
-        </label>
+        <label htmlFor="roles">ASSIGNED ROLES:</label>
         <select
           id="roles"
           name="roles"

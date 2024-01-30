@@ -1,8 +1,11 @@
 import { useGetMessagesQuery } from './messagesApiSlice'
 import MessageCard from './MessageCard'
 import Loading from '../../components/Loading'
+import { useNavigate } from 'react-router-dom'
 
 const MessagesList = () => {
+  const navigate = useNavigate()
+  //
   const {
     data: messages,
     isLoading,
@@ -16,7 +19,7 @@ const MessagesList = () => {
   if (isLoading) content = <Loading />
 
   if (isError) {
-    content = <p className="errmsg">{error?.data?.message}</p>
+    content = <p>{error?.data?.message}</p>
   }
 
   if (isSuccess) {
@@ -31,6 +34,12 @@ const MessagesList = () => {
     content = (
       <div className="p-3">
         <p>These are the messages</p>
+        <button
+          onClick={() => navigate('/dash/messages/new')}
+          className="btn btn-primary bg-gray-300 text-gray-600 p-3 rounded-md"
+        >
+          New
+        </button>
         {messagesContent}
       </div>
     )

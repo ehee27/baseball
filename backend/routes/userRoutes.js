@@ -15,9 +15,10 @@ router.post('/auth', authUser)
 router.post('/', registerUser)
 router.post('/logout', logoutUser)
 
-router
-  .route('/profile')
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile)
+// router
+//   .route('/profile')
+//   .get(protect, getUserProfile)
+//   .put(protect, updateUserProfile)
+router.route('/').get(getUserProfile).patch(updateUserProfile)
 
 export default router

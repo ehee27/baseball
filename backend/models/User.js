@@ -20,6 +20,11 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    active: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     roles: [
       {
         type: String,
