@@ -24,6 +24,7 @@ const MessageCard = ({ messageId }) => {
     return (
       <div className="rounded-lg shadow-md p-3 text-black">
         <p>{message.title}</p>
+        <p>{message.content}</p>
         <p className="text-xs">Created: {created}</p>
         <p className="text-xs">Updated: {updated}</p>
         <button className="icon-button table__button" onClick={handleEdit}>

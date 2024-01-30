@@ -14,7 +14,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 //
 // REGISTER NEW USER ---------------------------------
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, username, password, roles } = req.body
+  const { name, email, username, password, active, roles } = req.body
   //---------------
   const userExists = await User.findOne({ email })
   if (userExists) {
@@ -22,7 +22,14 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
   //
-  const user = await User.create({ name, email, username, password, roles })
+  const user = await User.create({
+    name,
+    email,
+    username,
+    password,
+    active,
+    roles,
+  })
   if (user) {
     //
     // GENERATE TOKEN -------------------------
@@ -78,21 +85,27 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //
 // UPDATE PROFILE --------------------------------
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.body.id)
   //
   if (user) {
     user.name = req.body.name || user.name
+    user.username = req.body.username || user.username
     user.email = req.body.email || user.email
+    user.active = req.body.active || user.active
+    user.roles = req.body.roles || user.roles
 
-    if (req.body.password) {
-      user.password = req.body.password
-    }
+    // if (req.body.password) {
+    //   user.password = req.body.password
+    // }
     const updatedUser = await user.save()
     //
     res.status(200).json({
       _id: updatedUser._id,
       name: updatedUser.name,
+      username: updatedUser.username,
       email: updatedUser.email,
+      // active: updatedUser.active,
+      roles: updatedUser.roles,
     })
     //
   } else {
