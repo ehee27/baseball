@@ -1,19 +1,19 @@
 import express from 'express'
-import { protect } from '../middleware/authMiddleware.js'
+// import { protect } from '../middleware/authMiddleware.js'
 import {
-  authUser,
   registerUser,
-  logoutUser,
   getUserProfile,
   updateUserProfile,
   getAllUsers,
 } from '../controllers/userController.js'
+import verifyJWT from '../middleware/verifyJWT.js'
+
 const router = express.Router()
 
+router.use(verifyJWT)
+
 router.get('/', getAllUsers)
-router.post('/auth', authUser)
 router.post('/', registerUser)
-router.post('/logout', logoutUser)
 
 // router
 //   .route('/profile')

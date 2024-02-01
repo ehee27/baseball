@@ -1,17 +1,17 @@
 import express from 'express'
-import { protect } from '../middleware/authMiddleware.js'
+// import { protect } from '../middleware/authMiddleware.js'
 import {
   getAllMessages,
   createNewMessage,
   updateMessage,
   deleteMessage,
 } from '../controllers/messageController.js'
-// import verifyJWT from '../middleware/verifyJWT.js'
+import verifyJWT from '../middleware/verifyJWT.js'
 
 const router = express.Router()
 
 // apply our verification
-// router.use(verifyJWT)
+router.use(verifyJWT)
 
 router
   .route('/')

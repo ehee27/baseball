@@ -3,10 +3,11 @@ import { selectAllUsers } from '../users/usersApiSlice'
 import NewMessageForm from './NewMessageForm'
 
 const NewMessage = () => {
-  console.log('THIS')
   const users = useSelector(selectAllUsers)
+  // NEED TO CHECK IF WE HAVE ANY USERS
+  if (!users.length) return <p>Not Currently Available</p>
 
-  const content = users ? <NewMessageForm users={users} /> : <p>Loading...</p>
+  const content = <NewMessageForm users={users} />
 
   return content
 }

@@ -4,6 +4,7 @@ dotenv.config()
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import userRoutes from './routes/userRoutes.js'
 import messageRoutes from './routes/messageRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 import connectDB from './config/db.js'
 import cors from 'cors'
 import corsOptions from './config/corsOptions.js'
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // USE ROUTES
+app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/messages', messageRoutes)
 

@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/User.js'
 import generateToken from '../utils/generateToken.js'
+// import generateRefreshToken from '../utils/generateRefreshToken.js'
+import jwt from 'jsonwebtoken'
 
 // GET ALL USERS -------------------------------------
 const getAllUsers = asyncHandler(async (req, res) => {
@@ -33,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     //
     // GENERATE TOKEN -------------------------
-    generateToken(res, user._id)
+    // generateToken(res, user._id)
     res.status(201).json({ _id: user._id, name: user.name, email: user.email })
     //
   } else {
@@ -42,34 +44,69 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 })
 
-//
 // AUTHORIZE ---------------------------------------
-const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body
-  //
-  const user = await User.findOne({ email })
-  if (user && (await user.matchPassword(password))) {
-    //
-    // GENERATE TOKEN -------------------------
-    generateToken(res, user._id)
-    res.status(201).json({ _id: user._id, name: user.name, email: user.email })
-  } else {
-    res.status(401)
-    throw new Error('Invalid email or password')
-  }
-  res.status(200).json({ message: 'Auth User' })
-})
+// const authUser = asyncHandler(async (req, res) => {
+//   // const { email, password } = req.body
+//   const { username, password } = req.body
+//   //
+//   const user = await User.findOne({ username }).exec()
+//   if (user && (await user.matchPassword(password))) {
+//     //
+//     // GENERATE TOKEN -------------------------
+//     generateToken(res, user._id)
+//     res.status(201).json({ _id: user._id, name: user.name, email: user.email })
+//   } else {
+//     res.status(401)
+//     throw new Error('Invalid email or password')
+//   }
+//   res.status(200).json({ message: 'Auth User' })
+// })
+
+// REFRESH -----------------------------------------
+// const refreshAuth = asyncHandler(async (req, res) => {
+//   // WE EXPECT A COOKIE IN THE REQ
+//   const cookies = req.cookies
+//   // IF WE DON'T HAVE IT
+//   if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' })
+//   // OTHERWISE SET THE refreshToken to the jwt
+//   const refreshToken = cookies.jwt
+//   //
+//   jwt.verify(
+//     refreshToken,
+//     process.env.JWT_REFRESH_SECRET,
+//     asyncHandler(async (err, decoded) => {
+//       if (err) return res.status(403).json({ message: 'Forbidden' })
+//       //
+//       const foundUser = await User.findOne({ username: decoded.username })
+//       //
+//       if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
+//       //
+//       const accessToken = jwy.sign(
+//         {
+//           UserInfo: {
+//             username: foundUser.username,
+//             roles: foundUser.roles,
+//           },
+//         },
+//         process.env.JWT_SECRET,
+//         { expiresIn: '10s' }
+//       )
+
+//       res.json(accessToken)
+//     })
+//   )
+// })
 
 //
 // LOGOUT -------------------------------------
-const logoutUser = asyncHandler(async (req, res) => {
-  res.cookie('jwt', '', {
-    httpOnly: true,
-    expires: new Date(0),
-  })
-  res.status(200).json({ message: 'User logged outz' })
-  console.log('Cookie cleared')
-})
+// const logoutUser = asyncHandler(async (req, res) => {
+//   res.cookie('jwt', '', {
+//     httpOnly: true,
+//     expires: new Date(0),
+//   })
+//   res.status(200).json({ message: 'User logged outz' })
+//   console.log('Cookie cleared')
+// })
 
 //
 // GET PROFILE ------------------------------------
@@ -117,9 +154,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 export {
   getAllUsers,
-  authUser,
+  // authUser,
+  // refreshAuth,
   registerUser,
-  logoutUser,
+  // logoutUser,
   getUserProfile,
   updateUserProfile,
 }

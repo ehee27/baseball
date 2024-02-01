@@ -9,7 +9,11 @@ const UsersList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetUsersQuery()
+  } = useGetUsersQuery('usersList', {
+    pollingInterval: 15000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  })
 
   let content
 
@@ -22,9 +26,9 @@ const UsersList = () => {
   if (isSuccess) {
     const { ids } = users
 
-    const usersContent = ids?.length
-      ? ids.map(userId => <UserCard key={userId} userId={userId} />)
-      : null
+    const usersContent =
+      ids?.length &&
+      ids.map(userId => <UserCard key={userId} userId={userId} />)
 
     content = (
       <div className="p-3">

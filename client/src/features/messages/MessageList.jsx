@@ -2,9 +2,11 @@ import { useGetMessagesQuery } from './messagesApiSlice'
 import MessageCard from './MessageCard'
 import Loading from '../../components/Loading'
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
 const MessagesList = () => {
   const navigate = useNavigate()
+  const { username, isPlayer, isCoach } = useAuth()
   //
   const {
     data: messages,
@@ -12,24 +14,42 @@ const MessagesList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetMessagesQuery()
+  } = useGetMessagesQuery('messagesList', {
+    pollingInterval: 15000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  })
 
   let content
-
   if (isLoading) content = <Loading />
-
   if (isError) {
     content = <p>{error?.data?.message}</p>
   }
-
+  // SUCCESS - BUILD THE CONTENT --------------------------
   if (isSuccess) {
-    const { ids } = messages
+    const { ids, entities } = messages
 
-    const messagesContent = ids?.length
-      ? ids.map(messageId => (
-          <MessageCard key={messageId} messageId={messageId} />
-        ))
-      : null
+    // PLAYER OR COACH CAN VIEW ALL via IDs
+    let filteredMessagesByID
+    if (isPlayer || isCoach) {
+      filteredMessagesByID = [...ids]
+      // IF NOT PLAYER OR COACH FILTER BY USERNAME --------
+    } else {
+      filteredMessagesByID = ids.filter(
+        messageId => entities[messageId].username === username
+      )
+    }
+
+    const messagesContent =
+      ids?.length &&
+      filteredMessagesByID.map(messageId => (
+        <MessageCard key={messageId} messageId={messageId} />
+      ))
+    // const messagesContent = ids?.length
+    //   ? ids.map(messageId => (
+    //       <MessageCard key={messageId} messageId={messageId} />
+    //     ))
+    //   : null
 
     content = (
       <div className="p-3">
