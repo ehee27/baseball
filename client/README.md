@@ -30,6 +30,43 @@
    import react-router-dom and create route tree
 
 6. State Management with RTK
-   'Build from base' - apiSlice (baseUrl), feature slices, injectEndpoints, builder
-   generate custom hooks
-   write custom selectors to use memoized data (access to ids)
+   'Build from base' - apiSlice (baseUrl), feature slices, injectEndpoints, buil queries and mutations
+   each feature will have custom slice, building endpoints and custom hooks
+   write custom selectors to use memoized data (access to ids) for working with targeted data
+
+7. Fontend components to text RTK
+   lists - create a list for each feature and render the data (optional cards and details pages)
+   register - form componenet that creates a user, account ec.
+   update - form component that edits specific data
+   delete - button attached to deleteMutation
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+8. Subscriptions and Prefetching - SUBSCRIBE, LISTEN, REFETCH
+   \*\* when we load the application we're 'querying the data' or 'creating a subscription' but if we're on a component that's not actually QUERYING THE DATA, data could 'expire' in other places, thus leading to issues.
+
+A. SUBSCRIBE TO THE STORE
+create a PreFetch component in auth folder
+utilize useEffect so it runs on mount
+
+'dispatch' GET methods from store - call Slice, call endPoints, query, initiate
+\*\*\* usersApiSlice.endpoints.getUsers.initiate()
+
+utitlize 'cleanup function' to unsubscribe when leaving protected pages
+
+WRAP OUR DASH with the PREFETCH
+'Outlet' component will provide Prefetch to ALL CHILD comps wrapped in it
+\*\* wrap the Routes we want to use Prefetch (dash)
+
+B. LISTEN and refresh
+import setupListeners in store
+set this to dispatch from the store
+we can now add options object to our list components
+
+- pollingIntervals - how often do we want to query?
+- refetch on Focus - focusing on another browser window
+- refetch on Mount or 'clicking back and forth on components'
+
+C. REFETCH
+Our data will now refetch itself based on the conditions set in the options object.

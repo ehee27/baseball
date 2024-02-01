@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom'
+import Loading from './Loading'
 
 const Public = () => {
   //
 
   return (
-    <div className="border-2 p-3">
+    <div className="bg-gray-100 p-3">
       {/* <div className="hero-overlay bg-black bg-opacity-70">
           <div className="flex flex-col min-h-[100%] pt-20 text-white"> */}
-      <div className="py-10 px-6 mx-10">
-        <h1 className="font-sans text-sm md:text-2xl lg:text-5xl font-black p-5 text-center">
+      <div className="py-10">
+        <h1 className="text-2xl md:text-4xl font-black p-5 text-center">
           Welcome to the SHO
         </h1>
-        <div className="flex flex-col gap-4 text-left text-sm md:text-xl my-4">
+        <div className="flex flex-col gap-4 text-left text-sm md:text-lg my-4">
           <p>
             Getting recruited to play college baseball is no easy task. High
             school student-athletes must put in a lot of hard work to keep up
@@ -30,7 +31,7 @@ const Public = () => {
           </p>
         </div>
         <Link to="/login">
-          <button className="btn btn-accent bg-gray-500 text-white rounded.lg w-[40%] rounded-md p-1">
+          <button className="btn btn-primary bg-gray-300 text-gray-600 p-3 rounded-md">
             Login
           </button>
         </Link>
