@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImagePortrait } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../../hooks/useAuth'
 import ProfilePicUpload from '../modals/ProfilePicUpload'
-import dummyPic from '../../../../public/assets/player.jpg'
+import dummyPic from '../../../../public/assets/player.png'
 
 const ProfilePic = ({ user }) => {
   const [openProfilePic, setOpenProfilePic] = useState(false)
