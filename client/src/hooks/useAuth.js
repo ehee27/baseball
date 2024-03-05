@@ -4,13 +4,30 @@ import jwtDecode from 'jwt-decode'
 
 const useAuth = () => {
   const token = useSelector(selectCurrentToken)
+
   let isPlayer = false
   let isCoach = false
   let status = 'User'
 
   if (token) {
     const decoded = jwtDecode(token)
-    const { username, roles } = decoded.UserInfo
+    const {
+      id,
+      name,
+      username,
+      roles,
+      active,
+      position,
+      bio,
+      profilePic,
+      stats,
+      age,
+      height,
+      weight,
+      bats,
+      throws,
+      hs,
+    } = decoded.UserInfo
 
     isPlayer = roles.includes('Player')
     isCoach = roles.includes('Coach')
@@ -18,7 +35,26 @@ const useAuth = () => {
     if (isPlayer) status = 'Player'
     if (isCoach) status = 'Coach'
 
-    return { username, roles, status, isPlayer, isCoach }
+    return {
+      id,
+      name,
+      username,
+      roles,
+      active,
+      position,
+      bio,
+      profilePic,
+      stats,
+      status,
+      isPlayer,
+      isCoach,
+      age,
+      height,
+      weight,
+      bats,
+      throws,
+      hs,
+    }
   }
 
   return { username: '', roles: [], isPlayer, isCoach, status }

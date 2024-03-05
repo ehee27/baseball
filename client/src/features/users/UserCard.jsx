@@ -1,44 +1,99 @@
 import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectUserById } from './usersApiSlice'
-// import EditData from './modals/EditData'
+import CardModal from './modals/CardModal'
+import StatGrid from '../users/stats/StatGrid'
 
 const User = ({ userId }) => {
-  const navigate = useNavigate()
+  const [openCard, setOpenCard] = useState(false)
+  const [expanded, setExpanded] = useState(false)
   //
-  // const [openEdit, setOpenEdit] = useState(false)
   const user = useSelector(state => selectUserById(state, userId))
 
   if (user) {
-    const handleEdit = () => navigate(`/dash/users/${userId}`)
-    // const handleEdit = () => navigate('/dash/users/profile')
-    // const handleEdit = () => setOpenEdit(!openEdit)
-
-    const userRolesString = user.roles.toString().replaceAll(',', ', ')
+    const handleConnect = () => setOpenCard(!openCard)
 
     return (
-      <div className="rounded-lg border-2 shadow-md p-3 text-black my-2">
-        <p>{user.name}</p>
-        <p>{user.username}</p>
-        <p className="text-xs">{userRolesString}</p>
-        <p
-          className={`font-black ${
-            user.active === true ? `text-green-400` : `text-red-400`
-          }`}
-        >
-          {user.active === true ? <span>ACTIVE</span> : <span>INACTIVE</span>}
-        </p>
-        <button className="btn btn-secondary" onClick={handleEdit}>
-          <FontAwesomeIcon icon={faPenToSquare} />
-        </button>
-        {/* <EditData
+      <div className="bg-black/90 rounded-lg shadow-md p-1 text-black my-2 border-2 border-white">
+        <div className="flex gap-2 justify-center p-2">
+          {/* ------------ Player Pic ------------------- */}
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            <div className="flex justify-center items-center w-[100%] rounded-md py-2">
+              <img
+                className="h-[100%] w-[100%] max-h-[200px] max-w-[150px] rounded-lg"
+                src={`/public/assets/${user.profilePic}`}
+              ></img>
+            </div>
+
+            {/* ------------ Player Data ------------------- */}
+            <div className="col-span-2 w-[100%] p-2 rounded-md text-white">
+              <div className="flex">
+                <p className="text-md md:text-xl font-bold">{user.name} |</p>
+                <p className="text-md md:text-xl font-bold ml-2">
+                  {user.position}
+                </p>
+              </div>
+              <div className="mt-2">
+                <div className="flex gap-3">
+                  <p className="text-xs md:text-xl">{user.height}</p>
+                  <p className="text-xs md:text-xl">{user.weight} lbs</p>
+                </div>
+              </div>
+              <div className="flex mt-2">
+                {' '}
+                <p className="text-xs md:text-sm font-bold text-orange-400">
+                  HS: {user.hs}
+                </p>
+              </div>
+              {/* ------------ Bio with Expand Functionality---------------- */}
+              <div className="flex gap-2 mt-4 text-white">
+                {expanded ? (
+                  <p>
+                    {user.bio}{' '}
+                    <button
+                      onClick={() => setExpanded(!expanded)}
+                      className="font-bold p-1 text-orange-500"
+                    >
+                      Less
+                    </button>
+                  </p>
+                ) : (
+                  <p>
+                    {user.bio.substring(0, 300)}{' '}
+                    <button
+                      onClick={() => setExpanded(!expanded)}
+                      className="font-bold p-1 text-orange-500"
+                    >
+                      More
+                    </button>
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* --------------- STATS ---------------- */}
+        </div>
+        <div className="bg-zinc-900 p-3">
+          <div className="text-white">
+            STATS
+            <StatGrid stats={user.stats} />
+          </div>
+          <div className="flex justify-end gap-2 mt-4">
+            <button
+              onClick={handleConnect}
+              className="btn btn-primary border-2 border-orange-500/80 bg-zinc-900 text-gray-200 font-bold hover:border-white hover:text-white hover:bg-orange-600/90 p-3 rounded-md w-[100%] md:w-[35%] hover:scale-105 mb-5 transition-all"
+            >
+              Connect
+            </button>
+          </div>
+        </div>
+
+        <CardModal
           user={user}
-          openEdit={openEdit}
-          onClose={() => setOpenEdit(!openEdit)}
-        /> */}
+          openCard={openCard}
+          onClose={() => setOpenCard(!openCard)}
+        />
       </div>
     )
   } else return null

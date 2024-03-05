@@ -70,3 +70,5 @@ we can now add options object to our list components
 
 C. REFETCH
 Our data will now refetch itself based on the conditions set in the options object.
+
+Scott graduated Blue Valley North in 01' where he garnered All-EKL, All-JOCO, All-KCMetro, and played in the Kansas-Missouri game. He moved on to NCCC where he was an All-Conference selection 2 years. In 03' Lucas was voted to the All-Region XI team and led the Panthers to their first even JUCO World Series birth. After stints at the University of Arizona and Central Missouri State, Scott signed as an NDFA with the Minnesota Twins. He played one season in the GCL before being released. He signed with the Kansas City Royals pior to the the 06' campaign. Scott played a season in the AZL, then started the 07' season with the Burlington Bee's of the Midwest League before being released.

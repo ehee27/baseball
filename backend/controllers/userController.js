@@ -1,8 +1,5 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/User.js'
-import generateToken from '../utils/generateToken.js'
-// import generateRefreshToken from '../utils/generateRefreshToken.js'
-import jwt from 'jsonwebtoken'
 
 // GET ALL USERS -------------------------------------
 const getAllUsers = asyncHandler(async (req, res) => {
@@ -16,7 +13,8 @@ const getAllUsers = asyncHandler(async (req, res) => {
 //
 // REGISTER NEW USER ---------------------------------
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, username, password, active, roles } = req.body
+  const { name, email, username, profilePic, password, active, roles } =
+    req.body
   //---------------
   const userExists = await User.findOne({ email })
   if (userExists) {
@@ -31,82 +29,32 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
     active,
     roles,
+    position: '',
+    number: '',
+    age: '',
+    height: '',
+    weight: '',
+    bats: '',
+    throws: '',
+    hs: '',
+    bio: '',
+    profilePic: '',
+    stats: [],
   })
   if (user) {
     //
-    // GENERATE TOKEN -------------------------
-    // generateToken(res, user._id)
-    res.status(201).json({ _id: user._id, name: user.name, email: user.email })
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      profilePic: profilePic,
+    })
     //
   } else {
     res.status(400)
     throw new Error('Invalid user data')
   }
 })
-
-// AUTHORIZE ---------------------------------------
-// const authUser = asyncHandler(async (req, res) => {
-//   // const { email, password } = req.body
-//   const { username, password } = req.body
-//   //
-//   const user = await User.findOne({ username }).exec()
-//   if (user && (await user.matchPassword(password))) {
-//     //
-//     // GENERATE TOKEN -------------------------
-//     generateToken(res, user._id)
-//     res.status(201).json({ _id: user._id, name: user.name, email: user.email })
-//   } else {
-//     res.status(401)
-//     throw new Error('Invalid email or password')
-//   }
-//   res.status(200).json({ message: 'Auth User' })
-// })
-
-// REFRESH -----------------------------------------
-// const refreshAuth = asyncHandler(async (req, res) => {
-//   // WE EXPECT A COOKIE IN THE REQ
-//   const cookies = req.cookies
-//   // IF WE DON'T HAVE IT
-//   if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' })
-//   // OTHERWISE SET THE refreshToken to the jwt
-//   const refreshToken = cookies.jwt
-//   //
-//   jwt.verify(
-//     refreshToken,
-//     process.env.JWT_REFRESH_SECRET,
-//     asyncHandler(async (err, decoded) => {
-//       if (err) return res.status(403).json({ message: 'Forbidden' })
-//       //
-//       const foundUser = await User.findOne({ username: decoded.username })
-//       //
-//       if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
-//       //
-//       const accessToken = jwy.sign(
-//         {
-//           UserInfo: {
-//             username: foundUser.username,
-//             roles: foundUser.roles,
-//           },
-//         },
-//         process.env.JWT_SECRET,
-//         { expiresIn: '10s' }
-//       )
-
-//       res.json(accessToken)
-//     })
-//   )
-// })
-
-//
-// LOGOUT -------------------------------------
-// const logoutUser = asyncHandler(async (req, res) => {
-//   res.cookie('jwt', '', {
-//     httpOnly: true,
-//     expires: new Date(0),
-//   })
-//   res.status(200).json({ message: 'User logged outz' })
-//   console.log('Cookie cleared')
-// })
 
 //
 // GET PROFILE ------------------------------------
@@ -115,12 +63,15 @@ const getUserProfile = asyncHandler(async (req, res) => {
     _id: req.user._id,
     name: req.user.name,
     email: req.user.email,
+    profilePic: req.user.profilePic,
+    stats: req.user.stats,
   }
   res.status(200).json(user)
 })
 
 //
 // UPDATE PROFILE --------------------------------
+// either set NEW REQ DATA or EXISTING DATA
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.body.id)
   //
@@ -130,6 +81,17 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email
     user.active = req.body.active || user.active
     user.roles = req.body.roles || user.roles
+    user.position = req.body.position || user.position
+    user.number = req.body.number || user.number
+    user.age = req.body.age || user.age
+    user.height = req.body.height || user.height
+    user.weight = req.body.weight || user.weight
+    user.bats = req.body.bats || user.bats
+    user.throws = req.body.throws || user.throws
+    user.hs = req.body.hs || user.hs
+    user.bio = req.body.bio || user.bio
+    user.profilePic = req.body.profilePic || user.profilePic
+    user.stats = req.body.stats || user.stats
 
     // if (req.body.password) {
     //   user.password = req.body.password
@@ -143,6 +105,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       // active: updatedUser.active,
       roles: updatedUser.roles,
+      profilePic: updatedUser.profilePic,
+      stats: updatedUser.stats,
     })
     //
   } else {
@@ -152,12 +116,4 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Profile updated' })
 })
 
-export {
-  getAllUsers,
-  // authUser,
-  // refreshAuth,
-  registerUser,
-  // logoutUser,
-  getUserProfile,
-  updateUserProfile,
-}
+export { getAllUsers, registerUser, getUserProfile, updateUserProfile }

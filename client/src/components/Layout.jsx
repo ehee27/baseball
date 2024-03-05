@@ -6,7 +6,6 @@ import DashFooter from './dash/DashFooter'
 
 const Layout = () => {
   const { username } = useAuth()
-  console.log(username)
   return (
     <>
       <div className="min-h-screen">

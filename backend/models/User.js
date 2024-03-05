@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const userSchema = mongoose.Schema(
+  // ---- STANDARD DATA ---------------------
   {
     name: {
       type: String,
@@ -31,6 +32,52 @@ const userSchema = mongoose.Schema(
         default: 'User',
       },
     ],
+    // --- BASEBALL SPECIFIC -----------------
+    position: {
+      type: String,
+      required: false,
+    },
+    number: {
+      type: Number,
+      required: false,
+    },
+    age: {
+      type: Number,
+      required: false,
+    },
+    height: {
+      type: String,
+      required: false,
+    },
+    weight: {
+      type: Number,
+      required: false,
+    },
+    bats: {
+      type: String,
+      required: false,
+    },
+    throws: {
+      type: String,
+      required: false,
+    },
+    hs: {
+      type: String,
+      required: false,
+    },
+    bio: {
+      type: String,
+      required: false,
+    },
+    profilePic: {
+      type: String,
+      required: false,
+    },
+    stats: {
+      type: Array,
+      required: false,
+      default: [],
+    },
   },
   {
     timestamps: true,

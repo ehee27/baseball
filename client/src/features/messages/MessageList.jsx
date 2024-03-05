@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 
 const MessagesList = () => {
-  const navigate = useNavigate()
-  const { username, isPlayer, isCoach } = useAuth()
+  const { username, isPlayer, isCoach, id } = useAuth()
   //
   const {
     data: messages,
@@ -21,7 +20,7 @@ const MessagesList = () => {
   })
 
   let content
-  if (isLoading) content = <Loading />
+  if (isLoading) content = <p>Loading...</p>
   if (isError) {
     content = <p>{error?.data?.message}</p>
   }
@@ -36,7 +35,7 @@ const MessagesList = () => {
       // IF NOT PLAYER OR COACH FILTER BY USERNAME --------
     } else {
       filteredMessagesByID = ids.filter(
-        messageId => entities[messageId].username === username
+        messageId => entities[messageId].user === id
       )
     }
 
@@ -45,24 +44,8 @@ const MessagesList = () => {
       filteredMessagesByID.map(messageId => (
         <MessageCard key={messageId} messageId={messageId} />
       ))
-    // const messagesContent = ids?.length
-    //   ? ids.map(messageId => (
-    //       <MessageCard key={messageId} messageId={messageId} />
-    //     ))
-    //   : null
 
-    content = (
-      <div className="p-3">
-        <p>These are the messages</p>
-        <button
-          onClick={() => navigate('/dash/messages/new')}
-          className="btn btn-primary bg-gray-300 text-gray-600 p-3 rounded-md"
-        >
-          New
-        </button>
-        {messagesContent}
-      </div>
-    )
+    content = <div className="bg-zinc-500">{messagesContent}</div>
   }
 
   return content

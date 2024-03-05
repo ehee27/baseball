@@ -22,8 +22,21 @@ const login = asyncHandler(async (req, res) => {
   const accessToken = jwt.sign(
     {
       UserInfo: {
+        id: foundUser._id,
+        name: foundUser.name,
         username: foundUser.username,
         roles: foundUser.roles,
+        active: foundUser.active,
+        position: foundUser.position,
+        bio: foundUser.bio,
+        profilePic: foundUser.profilePic,
+        stats: foundUser.stats,
+        age: foundUser.age,
+        height: foundUser.height,
+        weight: foundUser.weight,
+        bats: foundUser.bats,
+        throws: foundUser.throws,
+        hs: foundUser.hs,
       },
     },
     process.env.JWT_SECRET,
@@ -77,8 +90,21 @@ const refresh = (req, res) => {
       const accessToken = jwt.sign(
         {
           UserInfo: {
+            id: foundUser._id,
+            name: foundUser.name,
             username: foundUser.username,
             roles: foundUser.roles,
+            active: foundUser.active,
+            position: foundUser.position,
+            bio: foundUser.bio,
+            profilePic: foundUser.profilePic,
+            stats: foundUser.stats,
+            age: foundUser.age,
+            height: foundUser.height,
+            weight: foundUser.weight,
+            bats: foundUser.bats,
+            throws: foundUser.throws,
+            hs: foundUser.hs,
           },
         },
         process.env.JWT_SECRET,

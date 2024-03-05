@@ -11,24 +11,25 @@ const getAllMessages = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: 'No messages found' })
   }
 
-  const messagesWithUser = await Promise.all(
-    messages.map(async message => {
-      const user = await User.findById(message.user).lean().exec()
-      return { ...message, username: user.username }
-    })
-  )
+  // const messagesWithUser = await Promise.all(
+  //   messages.map(async message => {
+  //     const user = await User.findById(message.user).lean().exec()
+  //     return { ...message, user: user.id }
+  //   })
+  // )
 
-  res.json(messagesWithUser)
+  // res.json(messagesWithUser)
+  res.json(messages)
 })
 
 //
 // CREATE NEW MESSAGE ---------------------------------
 const createNewMessage = asyncHandler(async (req, res) => {
   // const { creator, user, title, content } = req.body
-  const { user, title, content } = req.body
+  const { author, assignedTo, title, content } = req.body
 
   // Confirm data
-  if (!user || !title || !content) {
+  if (!assignedTo || !title || !content) {
     return res.status(400).json({ message: 'All fields are required' })
   }
 
@@ -44,8 +45,8 @@ const createNewMessage = asyncHandler(async (req, res) => {
   //
   // ACTUALLY CREATE THE MESSAGE
   const message = await Message.create({
-    // creator,
-    user,
+    author,
+    assignedTo,
     title,
     thread: [
       ...newThread,
@@ -77,10 +78,10 @@ const createNewMessage = asyncHandler(async (req, res) => {
 //
 // UPDATE MESSAGE ---------------------------------
 const updateMessage = asyncHandler(async (req, res) => {
-  const { id, creator, user, title, content, read } = req.body
+  const { id, author, assignedTo, title, content, read } = req.body
 
   // Confirm data
-  if (!id || !user || !title || !content || typeof read !== 'boolean') {
+  if (!id || !assignedTo || !title || !content || typeof read !== 'boolean') {
     return res.status(400).json({ message: 'All fields are required' })
   }
 
@@ -98,8 +99,8 @@ const updateMessage = asyncHandler(async (req, res) => {
   if (duplicate && duplicate?._id.toString() !== id) {
     return res.status(409).json({ message: 'Duplicate message title' })
   }
-  message.ceeator = creator
-  message.user = user
+  message.author = author
+  message.assignedTo = assignedTo
   message.title = title
   message.thread = [
     ...message.thread,

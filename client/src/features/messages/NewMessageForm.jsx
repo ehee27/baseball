@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAddNewMessageMutation } from './messagesApiSlice'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
+import useAuth from '../../hooks/useAuth'
 
 const NewMessageForm = ({ users }) => {
   const navigate = useNavigate()
+  const { id } = useAuth()
 
   // ADD MESSAGE MUTATION
   const [addNewMessage, { isLoading, isSuccess, isError, error }] =
@@ -28,7 +28,12 @@ const NewMessageForm = ({ users }) => {
     //   await addNewMessage({ user: userId, title, text })
     // }
 
-    await addNewMessage({ user: userId, title, content: text })
+    await addNewMessage({
+      author: id,
+      assignedTo: userId,
+      title,
+      content: text,
+    })
   }
   // CHECK FOR SUCCESS ---------------------------------
   useEffect(() => {
@@ -52,61 +57,61 @@ const NewMessageForm = ({ users }) => {
     )
   })
 
-  // const errClass = isError ? "errmsg" : "offscreen"
-  // const validTitleClass = !title ? "form__input--incomplete" : ''
-  // const validTextClass = !text ? "form__input--incomplete" : ''
-
   const content = (
-    <>
-      <p>{error?.data?.message}</p>
+    <div
+      className={`bg-center bg-cover bg-[url(../../../public/assets/CWS.webp)] min-h-screen`}
+    >
+      <div className="flex gap-2 flex-col items-center bg-black bg-opacity-75 min-h-screen pt-20">
+        <p>{error?.data?.message}</p>
 
-      <form
-        className="flex flex-col border-2 rounded-md p-3 w-[50%]"
-        onSubmit={onCreateMessageClicked}
-      >
-        <h2>New Message</h2>
-
-        <label htmlFor="title">Title:</label>
-        <input
-          className="bg-gray-100 p-2"
-          id="title"
-          name="title"
-          type="text"
-          autoComplete="off"
-          value={title}
-          onChange={onTitleChanged}
-        />
-
-        <label htmlFor="text">Text:</label>
-        <textarea
-          className="bg-gray-100 p-2"
-          id="text"
-          name="text"
-          value={text}
-          onChange={onTextChanged}
-        />
-
-        <label htmlFor="username">ASSIGNED TO:</label>
-        <select
-          id="username"
-          name="username"
-          className="bg-gray-100 p-2"
-          value={userId}
-          onChange={onUserIdChanged}
+        <form
+          className="flex flex-col border-2 border-white text-white rounded-md p-3 w-[90%] md:w-[60%]"
+          onSubmit={onCreateMessageClicked}
         >
-          {options}
-        </select>
-        <div className="my-2">
-          <button
-            className="btn btn-primary bg-gray-300 text-gray-600 p-3 rounded-md"
-            title="Save"
-            // disabled={!canSave}
+          <h2>New Message</h2>
+
+          <label htmlFor="title">Title:</label>
+          <input
+            className="bg-gray-100 p-2 text-black"
+            id="title"
+            name="title"
+            type="text"
+            autoComplete="off"
+            value={title}
+            onChange={onTitleChanged}
+          />
+
+          <label htmlFor="text">Text:</label>
+          <textarea
+            className="bg-gray-100 p-2 text-black"
+            id="text"
+            name="text"
+            value={text}
+            onChange={onTextChanged}
+          />
+
+          <label htmlFor="username">ASSIGNED TO:</label>
+          <select
+            id="username"
+            name="username"
+            className="bg-gray-100 p-2 text-black"
+            value={userId}
+            onChange={onUserIdChanged}
           >
-            <FontAwesomeIcon icon={faSave} />
-          </button>
-        </div>
-      </form>
-    </>
+            {options}
+          </select>
+          <div className="my-2">
+            <button
+              className="flex gap-2 btn btn-primary bg-green-500 text-white p-3 rounded-md"
+              title="Save"
+              // disabled={!canSave}
+            >
+              CREATE
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   )
 
   return content

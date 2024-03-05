@@ -2,33 +2,19 @@ import { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faRightFromBracket,
-  faFileCirclePlus,
-  faFilePen,
-  faUserGear,
-  faUserPlus,
+  // faFileCirclePlus,
+  // faUserPlus,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useSendLogoutMutation } from '../../features/auth/authApiSlice'
-// import Drawer from './Drawer'
 import useAuth from '../../hooks/useAuth'
-//
-const DASH_REGEX = /^\/dash(\/)?$/
-const MESSAGES_REGEX = /^\/dash\/messages(\/)?$/
-const USERS_REGEX = /^\/dash\/users(\/)?$/
-
-const iconData = [
-  { icon: faFileCirclePlus, link: '/dash/messages/new' },
-  { icon: faFilePen, link: '/dash/messages' },
-  { icon: faUserGear, link: '/dash/users' },
-  { icon: faUserPlus, link: '/dash/users/new' },
-]
 
 const DashHeader = () => {
   const navigate = useNavigate()
-  // const { pathname } = useLocation()
 
   // DESTRUCTURE FROM AUTH
-  const { isPlayer, isCoach } = useAuth()
+  const { isPlayer, isCoach, id } = useAuth()
 
   // SEND LOGOUT --------------------
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
@@ -39,25 +25,39 @@ const DashHeader = () => {
     if (isSuccess) navigate('/')
   }, [isSuccess, navigate])
 
+  // HANDLE LOGOUT
+  const handleLogout = async () => {
+    try {
+      sendLogout()
+      localStorage.removeItem('games')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // CONTENT
   const content = (
-    <div className="flex justify-between items-center bg-zinc-500 text-white p-3">
-      <div>Dash Header</div>
-      <div className="flex gap-4 justify-end w-[40%]">
+    <div className="flex justify-between items-center bg-orange-600/90 text-white py-3 px-10">
+      <div>
+        <Link to="/dash">Me</Link>
+      </div>
+      <div className="flex gap-8 justify-end w-[40%] text-zinc-200 font-bold text-lg">
         {/* IF PLAYER LOGGED IN, MAP THROUGH LINK ICONS */}
         {isPlayer ? (
-          iconData.map((item, i) => {
-            return (
-              <button key={i} onClick={() => navigate(item.link)}>
-                <FontAwesomeIcon icon={item.icon} />
-              </button>
-            )
-          })
+          <button
+            className="border-2 border-transparent py-1 px-2 rounded-3xl hover:border-white hover:scale-105 transition-all"
+            onClick={() => navigate('/dash/users')}
+          >
+            <FontAwesomeIcon icon={faUsers} />
+          </button>
         ) : (
           <span></span>
         )}
         {/* LOGOUT ICON ------------------------- */}
-        <button onClick={() => sendLogout()}>
+        <button
+          className="border-2 border-transparent py-1 px-2 rounded-3xl hover:border-white hover:scale-105 transition-all"
+          onClick={handleLogout}
+        >
           <FontAwesomeIcon icon={faRightFromBracket} />
         </button>
       </div>

@@ -61,7 +61,7 @@ const NewUserForm = () => {
       setUsername('')
       setPassword('')
       setRoles([])
-      navigate('/dash/users')
+      navigate('/')
     }
   }, [isSuccess, navigate])
 
@@ -79,105 +79,100 @@ const NewUserForm = () => {
   })
 
   const content = (
-    <>
-      <p>{error?.data?.message}</p>
-
-      <form
-        className="flex flex-col border-2 rounded-md p-3 w-[50%]"
-        onSubmit={onCreateUserClicked}
+    <div className="h-[100vh] bg-black/90">
+      <div
+        className={`bg-center bg-cover bg-[url(../../../../public/assets/CWS.webp)] h-3/5`}
       >
-        <h2>New User</h2>
+        <div className="flex gap-2 flex-col items-center bg-black bg-opacity-75 min-h-screen px-5 py-20">
+          <p>{error?.data?.message}</p>
+          <p className="text-xl md:text-2xl text-white">Create an account</p>
 
-        {/* // NAME --------------------------------- */}
-        <label htmlFor="name">
-          Name: <span className="nowrap">[3-20 letters]</span>
-        </label>
-        <input
-          className="bg-gray-100 p-2"
-          id="name"
-          name="name"
-          type="text"
-          autoComplete="off"
-          value={name}
-          onChange={onNameChanged}
-        />
-
-        {/* // EMAIL --------------------------------- */}
-        <label htmlFor="email">
-          Email: <span className="nowrap">[3-20 letters]</span>
-        </label>
-        <input
-          className="bg-gray-100 p-2"
-          id="email"
-          name="email"
-          type="text"
-          autoComplete="off"
-          value={email}
-          onChange={onEmailChanged}
-        />
-
-        {/* // USERNAME --------------------------------- */}
-        <label htmlFor="username">
-          Username: <span className="nowrap">[3-20 letters]</span>
-        </label>
-        <input
-          className="bg-gray-100 p-2"
-          id="username"
-          name="username"
-          type="text"
-          autoComplete="off"
-          value={username}
-          onChange={onUsernameChanged}
-        />
-
-        {/* // PASSWORD --------------------------------- */}
-        <label htmlFor="password">
-          Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span>
-        </label>
-        <input
-          className="bg-gray-100 p-2"
-          id="password"
-          name="password"
-          type="password"
-          value={password}
-          onChange={onPasswordChanged}
-        />
-
-        {/* // ROLES --------------------------------- */}
-        <label htmlFor="roles">ASSIGNED ROLES:</label>
-        <select
-          id="roles"
-          name="roles"
-          className="bg-gray-100 p-2"
-          multiple={true}
-          size="3"
-          value={roles}
-          onChange={onRolesChanged}
-        >
-          {options}
-        </select>
-
-        {/* // CREATE BUTTON --------------------------------- */}
-        <div className="my-2">
-          <button
-            className="btn btn-primary bg-gray-300 text-gray-600 p-3 rounded-md"
-            title="Save"
-            disabled={!canSave}
+          <form
+            className="flex flex-col text-zinc-500 rounded-md p-5 w-[90%] md:w-[30%] bg-white"
+            onSubmit={onCreateUserClicked}
           >
-            <FontAwesomeIcon icon={faSave} />
-          </button>
+            {/* // NAME --------------------------------- */}
+            <label htmlFor="name">
+              Name: <span className="nowrap">[3-20 letters]</span>
+            </label>
+            <input
+              className="bg-zinc-100 rounded-lg p-2 shadow-inner shadow-gray-200 text-black mb-3"
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="off"
+              value={name}
+              onChange={onNameChanged}
+            />
+
+            {/* // EMAIL --------------------------------- */}
+            <label htmlFor="email">
+              Email: <span className="nowrap">[3-20 letters]</span>
+            </label>
+            <input
+              className="bg-zinc-100 rounded-lg p-2 shadow-inner shadow-gray-200 text-black mb-3"
+              id="email"
+              name="email"
+              type="text"
+              autoComplete="off"
+              value={email}
+              onChange={onEmailChanged}
+            />
+
+            {/* // USERNAME --------------------------------- */}
+            <label htmlFor="username">
+              Username: <span className="nowrap">[3-20 letters]</span>
+            </label>
+            <input
+              className="bg-zinc-100 rounded-lg p-2 shadow-inner shadow-gray-200 text-black mb-3"
+              id="username"
+              name="username"
+              type="text"
+              autoComplete="off"
+              value={username}
+              onChange={onUsernameChanged}
+            />
+
+            {/* // PASSWORD --------------------------------- */}
+            <label htmlFor="password">
+              Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span>
+            </label>
+            <input
+              className="bg-zinc-100 rounded-lg p-2 shadow-inner shadow-gray-200 text-black mb-3"
+              id="password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={onPasswordChanged}
+            />
+
+            {/* // ROLES --------------------------------- */}
+            <label htmlFor="roles">MEMBERSHIP:</label>
+            <select
+              id="roles"
+              name="roles"
+              className="bg-zinc-100 p-2 text-black"
+              multiple={true}
+              size="2"
+              value={roles}
+              onChange={onRolesChanged}
+            >
+              {options}
+            </select>
+
+            {/* // CREATE BUTTON --------------------------------- */}
+            <button
+              className="btn btn-primary border-2 border-orange-500/80 bg-zinc-900 text-gray-200 font-bold hover:border-white hover:text-white hover:bg-orange-600/90 p-3 rounded-md w-[100%] hover:scale-105 transition-all mt-5"
+              disabled={!canSave}
+            >
+              Sign In
+            </button>
+          </form>
         </div>
-      </form>
-    </>
+      </div>
+    </div>
   )
 
   return content
 }
 export default NewUserForm
-
-// const errClass = isError ? 'errmsg' : 'offscreen'
-// const validUserClass = !validUsername ? 'form__input--incomplete' : ''
-// const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
-// const validRolesClass = !Boolean(roles.length)
-//   ? 'form__input--incomplete'
-//   : ''

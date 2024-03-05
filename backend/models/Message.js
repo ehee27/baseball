@@ -2,11 +2,11 @@ import mongoose from 'mongoose'
 
 const messageSchema = new mongoose.Schema(
   {
-    creator: {
+    author: {
       type: String,
       required: false,
     },
-    user: {
+    assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Player',
