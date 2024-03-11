@@ -1,38 +1,35 @@
-// modal contains a form to upload image file
-// 3 STEPS
-// 1. formData uploaded via routes w multer - image uploaded to assets
-// 2. updateProfile runs to update 'player.profilePic'
-// 3. dispatch 'setCreds' to update auth/playerInfo with profilePic data
-
 import { useState } from 'react'
-import { useUpdateUserMutation, useUploadPicMutation } from '../usersApiSlice'
+import { useUpdateUserMutation } from '../usersApiSlice'
 import Loading from '../../../components/Loading'
+import { storage } from '../../../firebase'
+import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage'
 // import { toast } from 'react-toastify'
 
-const ProfilePic = ({ user, openProfilePic, onClose }) => {
-  // initialize dispatch, destrucutre update actions, set file state
+const ProfilePic = ({ user, openProfilePic, onClose, username, id }) => {
   const [updateUser, { isLoading }] = useUpdateUserMutation()
-  const [uploadPic] = useUploadPicMutation()
-  const [file, setFile] = useState('')
+  const [imageUpload, setImageUpload] = useState(null)
 
-  // handleUpload runs steps 1-3 mentioned above
+  // HANDLE UPLOAD
   const handleUpload = async e => {
     e.preventDefault()
+    if (imageUpload == null) return
     try {
-      // package the form data
-      const formData = new FormData()
-      formData.append('file', file)
-      // upload said form data
-      uploadPic(formData)
-      //
+      const imageRef = ref(
+        storage,
+        `profile-pics/${username}/${imageUpload.name}`
+      )
+      uploadBytes(imageRef, imageUpload).then(() => {
+        alert('Image Uploaded')
+      })
+      // UPDATE USER IN MONGO
       await updateUser({
-        id: user.id,
-        profilePic: file.name,
+        id,
+        profilePic: imageUpload.name,
       })
       onClose()
-      window.location.reload()
-    } catch (error) {
-      // toast.error(error)
+      console.log('Image uploaded!')
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -55,11 +52,15 @@ const ProfilePic = ({ user, openProfilePic, onClose }) => {
           <div className="text-md md:text-xl mb-3">Upload Profile Pic</div>
           <div className="grid grid-cols-1 md:grid-cols-2 mt-2">
             <div className="flex justify-center items-center p-1">
-              <input
+              {/* <input
                 className="text-sm"
                 type="file"
                 accept="image/"
                 onChange={e => setFile(e.target.files[0])}
+              /> */}
+              <input
+                type="file"
+                onChange={e => setImageUpload(e.target.files[0])}
               />
             </div>
 
@@ -86,3 +87,23 @@ const ProfilePic = ({ user, openProfilePic, onClose }) => {
 }
 
 export default ProfilePic
+
+// const handleUpload = async e => {
+//   e.preventDefault()
+//   try {
+//     // package the form data
+//     const formData = new FormData()
+//     formData.append('file', file)
+//     // upload said form data
+//     uploadPic(formData)
+//     //
+//     await updateUser({
+//       id: user.id,
+//       profilePic: file.name,
+//     })
+//     onClose()
+//     window.location.reload()
+//   } catch (error) {
+//     // toast.error(error)
+//   }
+// }

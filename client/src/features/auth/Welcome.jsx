@@ -27,7 +27,7 @@ const Welcome = () => {
     <div className="h-[100vh]">
       {/* ------------------- OUTER DIV - bg image ------------------------ */}
       <div
-        className={`bg-center bg-cover bg-[url(../../../public/assets/lockerroom.png)] h-[100%]`}
+        className={`bg-center bg-cover bg-[url(/public/assets/lockerroom.png)] h-[100%]`}
       >
         {/* ------------------- INNER OVERLAY FOR COLOR ------------------------ */}
         <div className="bg-black/90 h-[100%]">

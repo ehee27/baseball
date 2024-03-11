@@ -5,7 +5,7 @@ import useAuth from '../../../hooks/useAuth'
 import ProfilePicUpload from '../modals/ProfilePicUpload'
 import dummyPic from '../../../../public/assets/player.png'
 
-const ProfilePic = ({ user }) => {
+const ProfilePic = ({ user, username, id }) => {
   const [openProfilePic, setOpenProfilePic] = useState(false)
   //
   const { profilePic } = useAuth()
@@ -13,6 +13,8 @@ const ProfilePic = ({ user }) => {
     <div className="ml-2 rounded-md">
       <ProfilePicUpload
         user={user}
+        username={username}
+        id={id}
         openProfilePic={openProfilePic}
         onClose={() => setOpenProfilePic(!openProfilePic)}
       />

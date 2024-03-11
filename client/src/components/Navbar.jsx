@@ -24,15 +24,15 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">
           <li>
             <details>
-              <summary className="text-white">Menu</summary>
-              <ul className="p-2 bg-base-100 rounded-t-none">
+              <summary className="text-white mr-4">Menu</summary>
+              <ul className="p-2 bg-black rounded-t-none">
                 {links.map((item, i) => {
                   return (
-                    <li key={i}>
-                      <Link
-                        className="text-xs md:text-lg border-2 border-transparent p-1 rounded-md hover:border-orange-500 text-white transition-all"
-                        to={item.path}
-                      >
+                    <li
+                      key={i}
+                      className="text-white rounded-md border-2 border-transparent hover:border-orange-500 transition-all"
+                    >
+                      <Link className="text-xs md:text-lg" to={item.path}>
                         {item.name}
                       </Link>
                     </li>
