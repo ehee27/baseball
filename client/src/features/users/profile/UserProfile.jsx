@@ -12,26 +12,13 @@ import DataColumn from './DataColumn'
 import UploadStats from '../stats/UploadStats'
 import StatGrid from '../stats/StatGrid'
 import Bio from './Bio'
+import ImageUpload from './ImageUpload'
 
 const UserProfile = () => {
   // DESCTRUCT AUTH
-  const {
-    name,
-    username,
-    active,
-    id,
-    position,
-    bio,
-    stats,
-    age,
-    height,
-    weight,
-    bats,
-    throws,
-    hs,
-  } = useAuth()
+  const { username, active, id, bio, stats } = useAuth()
   // CONTEXT
-  const { games } = useContext(StatsContext)
+  // const { games } = useContext(StatsContext)
   // STATE
   const [openBioComplete, setOpenBioComplete] = useState(true)
   const [openEditUser, setOpenEditUser] = useState(false)
@@ -55,14 +42,18 @@ const UserProfile = () => {
             <>
               {/* ---------------- OUTER DIV - bg image ------------------ */}
               <div
-                className={`bg-center bg-cover bg-[url(../../../../public/assets/Baum-Walker-Stadium-1.png)]`}
+                className={`bg-center bg-cover bg-[url(/public/assets/Baum-Walker-Stadium-1.png)]`}
               >
                 {/* ----------------- BANNER CONTENT ----------------------- */}
                 <div className="bg-black/80 h-[100%] py-2 px-5 md:py-10 md:px-20">
                   <div className="grid grid-cols-1 md:grid-cols-4">
                     {/* ----------------- Top LEFT COLUMN -------------------- */}
                     <div className="flex flex-col justify-center items-center">
-                      <ProfilePicColumn user={user} />
+                      <ProfilePicColumn
+                        user={user}
+                        username={username}
+                        id={id}
+                      />
                     </div>
                     {/* ------------------ Top RIGHT COLUMN -------------------- */}
                     <div className="col-span-3 flex flex-col justify-end">

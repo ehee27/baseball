@@ -19,7 +19,7 @@ const Public = () => {
         {/* ------------------- OUTER DIV - bg image ------------------------ */}
 
         <div
-          className={`bg-center bg-cover bg-[url(../../../../public/assets/CWS.png)] h-[100%]`}
+          className={`bg-center bg-cover bg-[url(/public/assets/CWS.png)] h-[100%]`}
         >
           {/* ----------------- BANNER CONTENT ----------------------- */}
           <div className="bg-black/70 h-[100%] py-2 px-5 md:py-10 md:px-20">
