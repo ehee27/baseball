@@ -15,16 +15,16 @@ const ImageUpload = ({ username, id }) => {
   const imageListRef = ref(storage, `profile-pics/${username}`)
 
   // render the imageList on mount
-  // useEffect(() => {
-  //   listAll(imageListRef).then(res => {
-  //     res.items.forEach(item => {
-  //       getDownloadURL(item).then(url => {
-  //         setImageList(prev => [...prev, url])
-  //         console.log('This is the imageList', imageList)
-  //       })
-  //     })
-  //   })
-  // }, [])
+  useEffect(() => {
+    listAll(imageListRef).then(res => {
+      res.items.forEach(item => {
+        getDownloadURL(item).then(url => {
+          setImageList(prev => [...prev, url])
+          console.log('This is the imageList', imageList)
+        })
+      })
+    })
+  }, [])
 
   // HANDLE UPLOAD image to FB and update user in Mongo
   const uploadImage = async e => {

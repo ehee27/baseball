@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useUpdateUserMutation } from '../usersApiSlice'
 import Loading from '../../../components/Loading'
 import { storage } from '../../../firebase'
-import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage'
+import { ref, uploadBytes } from 'firebase/storage'
 // import { toast } from 'react-toastify'
 
 const ProfilePic = ({ user, openProfilePic, onClose, username, id }) => {
