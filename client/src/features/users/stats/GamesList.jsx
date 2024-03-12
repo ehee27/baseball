@@ -12,7 +12,7 @@ const GamesList = ({ setOpenStats }) => {
         </div>
         <div className="w-[50%]">
           <button
-            className="btn btn-primary border-2 border-orange-500/80 bg-orange-500/80 hover:border-white text-white p-3 rounded-md w-[100%] md:w-[100%] transition-all"
+            className="btn btn-primary border-2 border-orange-500/80 bg-orange-500/80 hover:bg-orange-500 hover:border-white text-white p-3 rounded-md w-[100%] md:w-[100%] transition-all"
             onClick={setOpenStats}
           >
             Upload Stats

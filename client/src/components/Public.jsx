@@ -50,17 +50,15 @@ const Public = () => {
             {/* --------------------- BUTTONS --------------------------- */}
             <div className="grid grid-cols-1 md:grid-cols-2 p-5 bg-black/70 shadow-md shadow-black">
               {buttons.map((item, i) => (
-                <>
-                  <Link
-                    className="flex justify-center items-center w-[100%] my-2"
-                    to={`${item.link}`}
-                    key={i}
-                  >
-                    <button className="btn btn-primary border-2 border-orange-500/80 bg-zinc-900 text-gray-200 font-bold hover:border-white hover:text-white hover:bg-orange-600/90 p-3 rounded-md w-[80%] hover:scale-105 transition-all">
-                      {item.label}
-                    </button>
-                  </Link>
-                </>
+                <Link
+                  className="flex justify-center items-center w-[100%] my-2"
+                  to={`${item.link}`}
+                  key={i}
+                >
+                  <button className="btn btn-primary border-2 border-orange-500/80 bg-zinc-900 text-gray-200 font-bold hover:border-white hover:text-white hover:bg-orange-600/90 p-3 rounded-md w-[80%] hover:scale-105 transition-all">
+                    {item.label}
+                  </button>
+                </Link>
               ))}
             </div>
             {/* --------------------- LOGOS --------------------------- */}

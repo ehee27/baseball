@@ -20,7 +20,6 @@ const ImageUpload = ({ username, id }) => {
       res.items.forEach(item => {
         getDownloadURL(item).then(url => {
           setImageList(prev => [...prev, url])
-          console.log('This is the imageList', imageList)
         })
       })
     })
@@ -44,7 +43,6 @@ const ImageUpload = ({ username, id }) => {
         id,
         profilePic: imageUpload.name,
       })
-      console.log('Image uploaded!')
     } catch (err) {
       console.log(err)
     }

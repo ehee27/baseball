@@ -46,15 +46,13 @@ const Welcome = () => {
               <p>{name}</p>
               <div className="flex flex-col gap-2 mt-10 my-5">
                 {buttons.map((item, i) => (
-                  <>
-                    <button
-                      className="btn btn-primary border-2 border-orange-500/80 bg-zinc-900 text-gray-200 font-bold hover:border-white hover:text-white hover:bg-orange-600/90 p-3 rounded-md w-[100%] md:w-[50%] hover:scale-105 transition-all"
-                      onClick={() => navigate(`${item.link}`)}
-                      key={i}
-                    >
-                      {item.label}
-                    </button>
-                  </>
+                  <button
+                    className="btn btn-primary border-2 border-orange-500/80 bg-zinc-900 text-gray-200 font-bold hover:border-white hover:text-white hover:bg-orange-600/90 p-3 rounded-md w-[100%] md:w-[50%] hover:scale-105 transition-all"
+                    onClick={() => navigate(`${item.link}`)}
+                    key={i}
+                  >
+                    {item.label}
+                  </button>
                 ))}
               </div>
             </div>

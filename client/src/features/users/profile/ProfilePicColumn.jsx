@@ -7,26 +7,26 @@ import dummyPic from '../../../../public/assets/player.png'
 import { ref, listAll, getDownloadURL } from 'firebase/storage'
 import { storage } from '../../../firebase'
 
-const ProfilePic = ({ user, username, id }) => {
+const ProfilePicColumn = ({ user, username, id }) => {
+  // AUTH
+  const { profilePic } = useAuth()
+  // STATE
   const [openProfilePic, setOpenProfilePic] = useState(false)
   const [imageList, setImageList] = useState([])
-  const [userprofilePic, setUserProfilePic] = useState('')
 
   // ref the Images in FB
   const imageListRef = ref(storage, `profile-pics/${username}`)
+  //
   useEffect(() => {
     listAll(imageListRef).then(res => {
       res.items.forEach(item => {
         getDownloadURL(item).then(url => {
           setImageList(prev => [...prev, url])
-          setUserProfilePic(imageList[0])
         })
       })
     })
   }, [])
-  console.log('This is users pic', userprofilePic)
 
-  const { profilePic } = useAuth()
   return (
     <div className="ml-2 rounded-md">
       <ProfilePicUpload
@@ -39,8 +39,7 @@ const ProfilePic = ({ user, username, id }) => {
       <div className="bg-black/50 p-2 rounded-t-md">
         <img
           className="shadow-md h-[300px] w-[250px] rounded"
-          // src={profilePic}
-          src={profilePic === '' ? dummyPic : `${imageList[0]}`}
+          src={profilePic === '' ? dummyPic : imageList[0]}
         ></img>
       </div>
       {user && (
@@ -63,4 +62,4 @@ const ProfilePic = ({ user, username, id }) => {
   )
 }
 
-export default ProfilePic
+export default ProfilePicColumn

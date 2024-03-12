@@ -8,7 +8,7 @@ import { ref, uploadBytes } from 'firebase/storage'
 const ProfilePic = ({ user, openProfilePic, onClose, username, id }) => {
   const [updateUser, { isLoading }] = useUpdateUserMutation()
   const [imageUpload, setImageUpload] = useState(null)
-
+  console.log('This is the username', username)
   // HANDLE UPLOAD
   const handleUpload = async e => {
     e.preventDefault()
@@ -27,7 +27,6 @@ const ProfilePic = ({ user, openProfilePic, onClose, username, id }) => {
         profilePic: imageUpload.name,
       })
       onClose()
-      console.log('Image uploaded!')
     } catch (err) {
       console.log(err)
     }

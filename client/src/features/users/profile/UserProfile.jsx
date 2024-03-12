@@ -7,16 +7,16 @@ import { selectUserById } from '../usersApiSlice'
 import BioCompleteForm from '../modals/BioCompleteForm'
 import ProfilePicColumn from './ProfilePicColumn'
 import GamesList from '../stats/GamesList'
-import { StatsContext } from '../../../context/StatsContext'
+// import { StatsContext } from '../../../context/StatsContext'
 import DataColumn from './DataColumn'
 import UploadStats from '../stats/UploadStats'
 import StatGrid from '../stats/StatGrid'
 import Bio from './Bio'
-import ImageUpload from './ImageUpload'
+// import ImageUpload from './ImageUpload'
 
 const UserProfile = () => {
   // DESCTRUCT AUTH
-  const { username, active, id, bio, stats } = useAuth()
+  const { username, active, id, bio, stats, profilePic } = useAuth()
   // CONTEXT
   // const { games } = useContext(StatsContext)
   // STATE

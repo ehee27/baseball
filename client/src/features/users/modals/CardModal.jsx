@@ -28,15 +28,7 @@ const CardModal = ({ user, onClose, openCard }) => {
     >
       <div className="rounded shadow-md p-5 text-zinc-600 my-1 w-[100%] md:w-[60%] min-h-[50%] bg-zinc-900">
         {/* ----------- TOP BANNER ------------------ */}
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* ----------- LEFT DIV ------------------ */}
-          <div className="pb-5 flex justify-center">
-            <img
-              className="shadow-md h-[170px] w-[130px] rounded"
-              src={`/public/assets/${user.profilePic}`}
-            ></img>
-          </div>
-          {/* ----------- RIGHT DIV ------------------ */}
+        <div>
           <div className="flex flex-col justify-center items-center text-zinc-500 p-2">
             <div className="flex justify-center items-center w-[100%] text-white">
               {' '}

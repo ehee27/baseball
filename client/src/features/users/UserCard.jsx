@@ -15,33 +15,26 @@ const User = ({ userId }) => {
 
     return (
       <div className="bg-black/90 rounded-lg shadow-md p-1 text-black my-2 border-2 border-white">
-        <div className="flex gap-2 justify-center p-2">
+        <div className="flex gap-2 p-2 border-8">
           {/* ------------ Player Pic ------------------- */}
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className="flex justify-center items-center w-[100%] rounded-md py-2">
-              <img
-                className="h-[100%] w-[100%] max-h-[200px] max-w-[150px] rounded-lg"
-                src={`/public/assets/${user.profilePic}`}
-              ></img>
-            </div>
-
+          <div className="grid grid-cols-1">
             {/* ------------ Player Data ------------------- */}
-            <div className="col-span-2 w-[100%] p-2 rounded-md text-white">
+            <div className="w-[100%] p-2 rounded-md text-white">
               <div className="flex">
-                <p className="text-md md:text-xl font-bold">{user.name} |</p>
-                <p className="text-md md:text-xl font-bold ml-2">
+                <p className="text-2xl md:text-4xl font-bold">{user.name} |</p>
+                <p className="text-2xl md:text-4xl font-bold ml-2">
                   {user.position}
                 </p>
               </div>
               <div className="mt-2">
                 <div className="flex gap-3">
-                  <p className="text-xs md:text-xl">{user.height}</p>
-                  <p className="text-xs md:text-xl">{user.weight} lbs</p>
+                  <p className="text-md md:text-xl">{user.height}</p>
+                  <p className="text-md md:text-xl">{user.weight} lbs</p>
                 </div>
               </div>
               <div className="flex mt-2">
                 {' '}
-                <p className="text-xs md:text-sm font-bold text-orange-400">
+                <p className="text-md md:text-sm font-bold text-orange-400">
                   HS: {user.hs}
                 </p>
               </div>
