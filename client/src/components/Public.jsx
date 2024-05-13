@@ -29,7 +29,7 @@ const Public = () => {
               </h1>
               <div className="flex flex-col gap-4 text-left text-md md:text-lg my-4 bg-black/40 p-5 rounded">
                 <p>
-                  Gettings recruited to play college baseball is no easy task.
+                  Getting recruited to play college baseball is no easy task.
                   High school student-athletes must put in a lot of hard work to
                   keep up their grades and continue to improve their game, but
                   that's just the beginning. Many student-athletes believe, “If
